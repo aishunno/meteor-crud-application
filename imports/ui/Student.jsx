@@ -5,18 +5,26 @@ import { StudentsInfo } from '../api/studentsInfo.js'
 import { Meteor } from 'meteor/meteor'
 
 export default class Student extends Component {
+  state = {
+    activeRow: false
+  }
+
   deleteStudentInfo () {
     Meteor.call('students_info.remove', this.props.student._id)
   }
 
   onEditClick () {
+    this.setState({
+      activeRow: !this.state.activeRow
+    })
+
     this.props.editClickHandler()
   }
 
   render () {
     return (
       <React.Fragment>
-        <tr>
+        <tr className={this.state.activeRow ? 'table-info': null}>
           <td>{this.props.student.name}</td>
           <td>{this.props.student.email}</td>
           <td>{this.props.student.phone}</td>

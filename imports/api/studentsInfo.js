@@ -7,7 +7,9 @@ export const StudentsInfo = new Mongo.Collection('students_info')
 
 if (Meteor.isServer) {
   Meteor.publish('students_info', function studentsInfoPublication () {
-    return StudentsInfo.find()
+    return StudentsInfo.find({
+      $or: [{ owner: this.userId }]
+    })
   })
 }
 
@@ -18,10 +20,12 @@ Meteor.methods({
     check(phone, String)
     check(dob, String)
 
+    // Make sure the user is authenticated
     if (!this.userId) {
       throw new Meteor.Error('Not Authorized')
     }
 
+    // Insert data into database
     StudentsInfo.insert({
       name,
       email,
@@ -37,10 +41,11 @@ Meteor.methods({
     // Finds the student with the provided ID
     const student = StudentsInfo.findOne(studentId)
 
+    // Make sure only the creator can remove data
     if (student.owner !== this.userId) {
-      // make sure only the creator can remove data
       throw new Meteor.Error('Not Authorized')
     }
+
     // Removes student data
     StudentsInfo.remove(studentId)
   },
@@ -51,12 +56,15 @@ Meteor.methods({
     check(phone, String)
     check(dob, String)
 
+    // Finds the student with the provided student id
     const student = StudentsInfo.findOne(studentId)
 
+    // Make sure only the creator can update data
     if (student.owner !== this.userId) {
       throw new Meteor.Error('Not Authorized')
     }
 
+    // Update student data
     StudentsInfo.update(studentId, {
       $set: { name: name, email: email, phone: phone, dob: dob }
     })

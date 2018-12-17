@@ -49,15 +49,11 @@ export class Students extends Component {
     const phone = ReactDOM.findDOMNode(this.refs.updatedPhone).value.trim();
     const dob = ReactDOM.findDOMNode(this.refs.updatedDOB).value.trim();
 
-    // StudentsInfo.update(this.state.old_data._id, {
-    //     $set: { name, email, phone, dob },
-    // });
-
     Meteor.call('students_info.update', this.state.old_data._id, name, email, phone, dob)
 
     this.setState({
         showAddNewStudentForm: !this.state.showAddNewStudentForm,
-        old_data: {}
+        old_data: null
     });
   }
 
@@ -176,7 +172,10 @@ export class Students extends Component {
 }
 
 export default withTracker(() => {
+    Meteor.subscribe('students_info');
+
 	return {
-		students: StudentsInfo.find({}, { sort: { createdAt: -1 } }).fetch(),
+        students: StudentsInfo.find({}, { sort: { createdAt: -1 } }).fetch(),
+        currentUser: Meteor.user()
 	};
 })(Students);
