@@ -25,6 +25,11 @@ Meteor.methods({
       throw new Meteor.Error('Not Authorized')
     }
 
+    // Checks for empty fields
+    if (!name || !email || !phone || !dob) {
+      throw new Meteor.Error('Field should not be empty')
+    }
+
     // Insert data into database
     StudentsInfo.insert({
       name,
@@ -56,6 +61,10 @@ Meteor.methods({
     check(phone, String)
     check(dob, String)
 
+    // Checks for empty fields
+    if (!name || !email || !phone || !dob) {
+      throw new Meteor.Error('Field should not be empty')
+    }
     // Finds the student with the provided student id
     const student = StudentsInfo.findOne(studentId)
 
