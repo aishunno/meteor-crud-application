@@ -34,6 +34,7 @@ export class Students extends Component {
   }
 
   editStudentInfo(student) {
+    //   Temporary UI state for update form 
      this.setState({
          showAddNewStudentForm: !this.state.showAddNewStudentForm,
          name: student.name,
@@ -41,6 +42,7 @@ export class Students extends Component {
      })
   }
 
+  //   Update student data
   updateStudentInfo(event) {
     event.preventDefault();
 
@@ -51,13 +53,15 @@ export class Students extends Component {
 
     Meteor.call('students_info.update', this.state.old_data._id, name, email, phone, dob)
 
+    // Reset the temporary UI state 
     this.setState({
         showAddNewStudentForm: !this.state.showAddNewStudentForm,
-        old_data: null
+        old_data: null,
     });
   }
 
   renderStudents() {
+    // Maps students data to "Student" component
     return this.props.students.map((student) => (
         <Student editClickHandler={this.editStudentInfo.bind(this, student)} key={student._id} student={student} />
     ));
@@ -65,6 +69,10 @@ export class Students extends Component {
   render() {
     return (
         <React.Fragment>
+            {/* 
+                Generates form depending on the
+                "ShowAddNewStudentForm" state 
+            */}
             {this.state.showAddNewStudentForm ? <div className="student-form">
                 <h2 className="display-4 text-center">Add New Student</h2>
                 <form onSubmit={this.saveStudentData.bind(this)}>
@@ -128,7 +136,7 @@ export class Students extends Component {
                                     type="phone"
                                     ref="updatedPhone"
                                     defaultValue={this.state.old_data.phone}
-                                />
+                                /> 
                             </div>
                             <div className="col-md-6">
                                 <input
@@ -146,6 +154,10 @@ export class Students extends Component {
                 </form>
             </div>}
             <br/>
+            {/* 
+                Checks whether there is any
+                data stored if there so then displays the data
+            */}
             {this.props.students.length > 0 ? <div className="students_info"> 
                 <h1 className="display-4 text-center">Students Information</h1>
                 <table className="table student-table">
@@ -172,8 +184,10 @@ export class Students extends Component {
 }
 
 export default withTracker(() => {
+    // Subscribes to the publication 
     Meteor.subscribe('students_info');
 
+    // Returns data for the above subscription 
 	return {
         students: StudentsInfo.find({}, { sort: { createdAt: -1 } }).fetch(),
         currentUser: Meteor.user()

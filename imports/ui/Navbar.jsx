@@ -2,6 +2,7 @@
 import React from 'react'
 import AccountsUIWrapper from './AccountsUIWrapper.jsx'
 
+// Stateless Functional Component For Navigation Bar
 export default function Navbar () {
   return (
     <React.Fragment>

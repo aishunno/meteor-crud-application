@@ -3,8 +3,10 @@ import { Mongo } from 'meteor/mongo'
 import { Meteor } from 'meteor/meteor'
 import { check } from 'meteor/check'
 
+// Creates new collection
 export const StudentsInfo = new Mongo.Collection('students_info')
 
+// Publish data created by the current user
 if (Meteor.isServer) {
   Meteor.publish('students_info', function studentsInfoPublication () {
     return StudentsInfo.find({
@@ -13,6 +15,7 @@ if (Meteor.isServer) {
   })
 }
 
+// Methods for database operations
 Meteor.methods({
   'students_info.insert' (name, email, phone, dob) {
     check(name, String)
