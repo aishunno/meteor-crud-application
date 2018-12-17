@@ -1,10 +1,12 @@
+/* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom'
 import { StudentsInfo } from '../api/studentsInfo.js'
+import { Meteor } from 'meteor/meteor'
 
 export default class Student extends Component {
   deleteStudentInfo () {
-    StudentsInfo.remove(this.props.student._id)
+    Meteor.call('students_info.remove', this.props.student._id)
   }
 
   onEditClick () {

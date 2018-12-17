@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { withTracker } from 'meteor/react-meteor-data';
+import { Meteor } from 'meteor/meteor';
 import { StudentsInfo } from '../api/studentsInfo.js';
 import Student from './Student.jsx';
 
 export class Students extends Component {
-  
+
   state = {
       showAddNewStudentForm: true,
       old_data: {
@@ -24,15 +25,7 @@ export class Students extends Component {
     const phone = ReactDOM.findDOMNode(this.refs.phone).value.trim();
     const dob = ReactDOM.findDOMNode(this.refs.dob).value.trim();
 
-    StudentsInfo.insert({
-        name,
-        email,
-        phone,
-        dob,
-        createdAt: new Date(),
-        owner: Meteor.userId(),           
-        username: Meteor.user().username, 
-    });
+    Meteor.call('students_info.insert', name, email, phone, dob);
 
     ReactDOM.findDOMNode(this.refs.name).value = '';
     ReactDOM.findDOMNode(this.refs.email).value = '';
@@ -56,9 +49,11 @@ export class Students extends Component {
     const phone = ReactDOM.findDOMNode(this.refs.updatedPhone).value.trim();
     const dob = ReactDOM.findDOMNode(this.refs.updatedDOB).value.trim();
 
-    StudentsInfo.update(this.state.old_data._id, {
-        $set: { name, email, phone, dob },
-    });
+    // StudentsInfo.update(this.state.old_data._id, {
+    //     $set: { name, email, phone, dob },
+    // });
+
+    Meteor.call('students_info.update', this.state.old_data._id, name, email, phone, dob)
 
     this.setState({
         showAddNewStudentForm: !this.state.showAddNewStudentForm,
