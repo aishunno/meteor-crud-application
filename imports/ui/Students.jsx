@@ -14,7 +14,7 @@ export class Students extends Component {
           email: " ",
           phone: " ",
           dob: " "
-      }
+      } 
   }
   saveStudentData(event) {
     event.preventDefault();
@@ -30,6 +30,8 @@ export class Students extends Component {
         phone,
         dob,
         createdAt: new Date(),
+        owner: Meteor.userId(),           
+        username: Meteor.user().username, 
     });
 
     ReactDOM.findDOMNode(this.refs.name).value = '';

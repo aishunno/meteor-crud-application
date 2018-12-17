@@ -1,8 +1,10 @@
 /* Presets */
 :root {
-    --color-primary: #3f51b5;
-    --color-primary-light: #4758b9e5;
+    --color-primary: #2b2e39;
+    --color-primary-light: #2b2e39e1;
     --color-primary-dark: #2b3fb1;
+    --color-secondary: #de4f4f;
+    --color-secondary-dark: #a83636;
     --color-grey-light-1: #faf9f9;
     --color-grey-light-2: #f4f2f2;
     --color-grey-light-3: #f0eeee;
@@ -31,6 +33,75 @@ html {
 
 body {
     font-family: 'Nanum Gothic', sans-serif !important;
+}
+
+.navbar {
+    padding: 1.8rem !important;
+    background-color: var(--color-primary) !important;
+    margin: -5rem -5rem 2rem -5rem !important;
+}
+
+.navbar .navbar-brand {
+    font-size: 2rem !important;
+    font-weight: 700 !important;
+    color: var(--color-grey-light-1) !important;
+}
+
+.nav-link {
+    font-size: 1.8rem !important;
+    color: var(--color-grey-dark-3) !important;
+    text-transform: uppercase;
+    font-weight: 600 !important;
+}
+
+.nav-link:hover {
+    color: var(--color-grey-light-2);
+}
+
+#login-dropdown-list {
+    position: absolute;
+    top: 37px;
+    left: -145px;
+}
+
+.accounts-dialog {
+    z-index: 1000;
+    background: white;
+    border-radius: 0px;
+    padding: 16px 25px;
+    margin: -8px -12px 0 -68px;
+    width: 306px;
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+    color: #333;
+}
+
+#login-buttons .login-button, .accounts-dialog .login-button {
+    cursor: pointer;
+    user-select: none;
+    padding: 4px 8px;
+    font-size: 1.3rem;
+    line-height: 1.5;
+    text-align: center;
+    color: #fff;
+    background: var(--color-grey-dark-1);
+    border-radius: 0px;
+    border: none;
+    padding: .5rem;
+    margin: 1rem 0;
+}
+
+#login-buttons .login-button, .accounts-dialog .login-button:hover {
+    background-color: var(--color-grey-dark-1) !important;
+}
+
+#login-buttons a, .accounts-dialog a {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.accounts-dialog .additional-link {
+    font-size: 1.2rem;
 }
 
 .main-container {
@@ -71,18 +142,18 @@ body {
     justify-content: center;
     align-items: center;
     padding: 0 25px;
-    background-color: var(--color-primary);
+    background-color: var(--color-secondary);
     text-transform: uppercase; 
     transition: all 0.8s ease;
 }
 
 .update-button {
-    background-color: var(--color-primary-light);
+    background-color: var(--color-secondary);
 }
 
 .submit-button:hover {
     font-size: 1.9rem;
-    background-color: var(--color-primary-dark);
+    background-color: var(--color-secondary-dark);
 }
 
 .display-4 {
@@ -98,7 +169,7 @@ body {
 }
 
 .student-table thead{
-    background-color: var(--color-primary);
+    background-color: var(--color-secondary);
     padding: 1rem;
     color: #ffff;
     font-size: 1.8rem;
